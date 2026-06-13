@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { getNativeTokenAddress } from '@metamask/assets-controllers';
 import { PaymentOverride } from '@metamask/transaction-pay-controller';
+import { CHAIN_IDS } from '@metamask/transaction-controller';
 import { Alert, Severity } from '../../types/alerts';
 import { useTransactionPayToken } from '../pay/useTransactionPayToken';
 import { RowAlertKey } from '../../components/UI/info-row/alert-row/constants';
@@ -206,7 +207,7 @@ export function useInsufficientPayTokenBalanceAlert({
       ];
     }
 
-    if (isInsufficientForSourceNetwork) {
+    if (isInsufficientForSourceNetwork && sourceChainId !== CHAIN_IDS.MONAD) {
       return [
         {
           ...baseAlert,
@@ -228,6 +229,7 @@ export function useInsufficientPayTokenBalanceAlert({
     isInsufficientForFees,
     isInsufficientForSourceNetwork,
     isPostQuote,
+    sourceChainId,
     selectedFiatPaymentMethod,
     ticker,
   ]);

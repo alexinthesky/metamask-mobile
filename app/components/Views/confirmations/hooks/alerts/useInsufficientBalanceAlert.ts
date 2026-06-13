@@ -9,7 +9,7 @@ import { useTransactionMetadataRequest } from '../transactions/useTransactionMet
 import { useConfirmActions } from '../useConfirmActions';
 import { useConfirmationContext } from '../../context/confirmation-context';
 import { useIsGaslessSupported } from '../gas/useIsGaslessSupported';
-import { TransactionType } from '@metamask/transaction-controller';
+import { CHAIN_IDS, TransactionType } from '@metamask/transaction-controller';
 import {
   hasTransactionType,
   shouldApplyGasFeeSponsorship,
@@ -102,7 +102,7 @@ export const useInsufficientBalanceAlert = ({
       !hasTransactionType(transactionMetadata, IGNORE_TYPES) &&
       !isSponsoredTransaction;
 
-    if (!showAlert) {
+    if (!showAlert || transactionMetadata?.chainId === CHAIN_IDS.MONAD) {
       return [];
     }
 
