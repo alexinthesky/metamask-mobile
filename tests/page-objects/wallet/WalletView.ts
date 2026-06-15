@@ -491,8 +491,7 @@ class WalletView {
         // iOS: TokenListItem sets accessibilityLabel to "Name, $fiat, balance"
         // so the iOS predicate `name` (= accessibilityLabel) differs from testID.
         // Use `~testID` which maps to accessibilityIdentifier (= testID).
-        ios: () =>
-          PlaywrightMatchers.getElementByNameiOS(getAssetTestId(token)),
+        ios: () => PlaywrightMatchers.getElementById(getAssetTestId(token)),
       },
     });
   }
@@ -519,6 +518,7 @@ class WalletView {
       appium: async () => {
         await UnifiedGestures.waitAndTap(this.tokenRow(tokenLabel), {
           description: 'Token',
+          waitForInteractive: true,
         });
       },
     });
@@ -1270,8 +1270,10 @@ class WalletView {
   }
 
   async tapOnPerpsTab(): Promise<void> {
-    await Gestures.waitAndTap(this.perpsTab, {
-      elemDescription: 'Perps Tab Button',
+    await UnifiedGestures.waitAndTap(this.perpsTab, {
+      description: 'Perps Tab Button',
+      checkForDisplayed: false,
+      checkForEnabled: true,
     });
   }
 
